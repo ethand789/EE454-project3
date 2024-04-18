@@ -17,15 +17,10 @@ for i=1:maxframenum
     jpegs(i) = file.file_name;
 end
 
-%convert images to greyscale
-for i=0:maxframenum
-    Im = imread(jpegs(i));
-    Im = double(Im);
-    gIm =(Im(:,:,1) + Im(:,:,2) + Im(:,:,3))/3;
-    jpegs(i) = gIm;
-end
 
 %run motion detection algos
+BGSum = BGSum(jpegs,abs_diff_threshold,maxframenum);
+
 
 
 end
