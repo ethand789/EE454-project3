@@ -25,6 +25,15 @@ for i=1:maxframenum
 
 end
 %save outputs into file
+out_name = ['outputs-' dirstring];
+mkdir (out_name);
+for i=2:maxframenum
+    file_name = sprintf('f%d.jpg',i);
+    img_name = fullfile(out_name,file_name);
+    imwrite(outjpeg{i},img_name);
+end
+
+
 
 
 
