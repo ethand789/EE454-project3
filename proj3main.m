@@ -1,25 +1,27 @@
 function [outjpeg] = proj3main(dirstring, maxframenum, abs_diff_threshold, alpha_parameter, gamma_parameter)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%runs multiple motion detection algorithms on a given set of jpegs stored
+%in dirstring according to the other parameters
+
+%read files into array jpeg
 file = dir(dirstring);
-jpegs;
-file_name;
 for i=1:maxframenum
-    if (i < 10)
-        file_name = ['f000' num2str(i)];
-    elseif (i < 100)
-        file_name = ['f00' num2str(i)];
-    elseif (i < 1000)
-        file_name = ['f0' num2str(i)];
-    else
-        file_name = ['f' num2str(i)];
-    end
-    jpegs(i) = file.file_name;
+    file_name = [dirstring file(i+2).name];
+    tmp= imread(file_name);
+    jpeg(i) = tmp;
 end
 
 
 %run motion detection algos
-BGSum = BGSum(jpegs,abs_diff_threshold,maxframenum);
+BGS = BGSum(jpegs,abs_diff_threshold,maxframenum);
+FD = FrameDiff(jpegs,abs_diff_threshold,maxframenum);
+ABGS = ABGSum(jpegs,abs_diff_threshold,maxframenum,alpha_parameter);
+PFD = PFrameDiff(jpegs,abs_diff_threshold,maxframenum,gamma_parameter);
+
+for i=1:maxframenum
+    outjpeg(i) = [BGS(i) FD(i);ABGS(i) PFD(i)];
+
+end
+
 
 
 
