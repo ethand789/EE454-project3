@@ -1,10 +1,11 @@
 function [result] = BGSum(jpegs,lamda,size)
 
-B = jpegs(1);
-result = zeroes(size);
+B = jpegs{1};
+
 for i=2:size
-   diff = abs(jpegs(i) - B);
-   result(i)= imbinarize(diff,lamda);
+    temp = jpegs{i};
+   diff = abs(temp - B);
+   result{i}= imbinarize(diff,lamda);
 end
 
 end
